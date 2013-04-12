@@ -4,6 +4,10 @@
  */
 package sudoku;
 
+import sudoku.Okno;
+
+
+
 
 
 /**
@@ -17,6 +21,7 @@ public class Sudoku {
      */
     public static void main(String[] args) {
     // TODO Auto-generated method stub
+        
     Okno o = new Okno();
    
     o.setVisible(true);

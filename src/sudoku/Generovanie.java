@@ -20,7 +20,7 @@ public class Generovanie {
 
             int radek = rd.nextInt(9);
             int sloupec = rd.nextInt(9);
-               
+            
             
                       
             if (pole[radek][sloupec] != 0) {                // ked uz nieje vymazany
