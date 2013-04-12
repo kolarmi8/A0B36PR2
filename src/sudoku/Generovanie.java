@@ -12,7 +12,37 @@ import java.util.Random;
  * @author Michal
  */
 public class Generovanie {
-    public static void Generuj(int[][] pole, int obtiaznost){
+    int[][] pole; 
+    int obtiaznost;
+    Kontrola kon;
+     
+    public Generovanie(int obtiaznost) {
+        this.pole = new int[9][9];
+        this.obtiaznost = obtiaznost;
+        this.pole[1][1]=1;
+        GenerujCelePole();
+        Generuj();
+    }
+
+    public int[][] getPole() {
+        return pole;
+    }
+
+    public void setPole(int[][] pole) {
+        this.pole = pole;
+    }
+
+    public int getObtiaznost() {
+        return obtiaznost;
+    }
+
+    public void setObtiaznost(int obtiaznost) {
+        this.obtiaznost = obtiaznost;
+    }
+    
+    
+    
+    public void Generuj(){
         
         Random rd = new Random();
         
@@ -33,24 +63,29 @@ public class Generovanie {
         }
     
     }
+        
     }
     
-    public static void GenerujCelePole(int[][] pole){
+    public void GenerujCelePole(){
         
     
     int x=0;
+    
+    
     Random rd = new Random();
         for (int r = 0; r < 9; r++) {
             for (int s = 0; s < 9; s++) {
 
-            pole[r][s] = -(rd.nextInt(9) + 1);              // zapise nahodne zaporne cislo, aby ho uzivatel nemohol prepisovat
+            this.pole[r][s] = (rd.nextInt(9) + 1);     //zapor pre konzolu         // zapise nahodne zaporne cislo, aby ho uzivatel nemohol prepisovat
+            kon=new Kontrola(r,s,pole);
             x=0;
-             while(Kontrola.Kontroluj(r, s, pole)==false){
-             pole[r][s] = -(rd.nextInt(9) + 1);             // prepisuje cisla pokial nebude kontrola true
-                 x++;
+             while(kon.getVysledek()==false){
+             this.pole[r][s] = (rd.nextInt(9) + 1);             // prepisuje cisla pokial nebude kontrola true
+                 
+             x++;
                  if(x==25&&r>=1){
                      for (s = 0; s < 9; s++) {
-                         pole[r][s] = 0;                    // ak sa program zacykli, vymaze cely riadok 
+                         this.pole[r][s] = 0;                    // ak sa program zacykli, vymaze cely riadok 
                          
                      }
                      s=0;

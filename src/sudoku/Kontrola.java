@@ -12,17 +12,48 @@ import java.util.Map;
  * @author Michal
  */
 public class Kontrola {
-    
-    
-    static boolean Kontroluj(int radek, int sloupec, int[][] pole){
-    
-        if(KontrolujRadek(radek, pole)==false || KontrolujSloupec(sloupec, pole)==false || KontrolujCtverec(radek, sloupec, pole)==false ){
-        return false;  // ked aspon jedna metoda je false
-        }
-        return true; 
-        
+    int radek;
+    int sloupec;
+    int[][] pole;
+
+    public Kontrola(int radek, int sloupec, int[][] pole) {
+        this.radek = radek;
+        this.sloupec = sloupec;
+        this.pole = pole;
     }
-    static boolean KontrolujRadek(int radek, int[][] pole) {
+    public boolean getVysledek() {
+         if(KontrolujRadek()==false || KontrolujSloupec()==false || KontrolujCtverec()==false ){
+                return false;  // ked aspon jedna metoda je false
+            }
+                return true; 
+    }
+
+    public int getRadek() {
+        return radek;
+    }
+
+    public void setRadek(int radek) {
+        this.radek = radek;
+    }
+
+    public int getSloupec() {
+        return sloupec;
+    }
+
+    public void setSloupec(int sloupec) {
+        this.sloupec = sloupec;
+    }
+
+    public int[][] getPole() {
+        return pole;
+    }
+
+    public void setPole(int[][] pole) {
+        this.pole = pole;
+    }
+    
+     
+    boolean KontrolujRadek() {
         Map<Integer, Integer> mapa = new HashMap<Integer, Integer>();
         int ret = 1;
         for (int i = 0; i < 9; i++) {
@@ -45,7 +76,7 @@ public class Kontrola {
         }
     }
 
-    static boolean KontrolujSloupec(int sloupec, int[][] pole) {
+    boolean KontrolujSloupec() {
         Map<Integer, Integer> mapa = new HashMap<Integer, Integer>();
         int ret = 1;
         for (int i = 0; i < 9; i++) {
@@ -69,7 +100,7 @@ public class Kontrola {
         }
     }
 
-    static boolean KontrolujCtverec(int radek, int sloupec, int[][] pole) {
+    boolean KontrolujCtverec() {
         Map<Integer, Integer> mapa = new HashMap<Integer, Integer>();
         int a, b;
         if (radek >= 6) {

@@ -42,6 +42,7 @@ public class Okno extends JFrame{
 
         for(int j = 0; j < 9; j++) {
 
+            
             board[i][j] = new JTextField();
             board[i][j].setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
             board[i][j].setForeground(Color.BLACK);
