@@ -15,11 +15,36 @@ public class Kontrola {
     int radek;
     int sloupec;
     int[][] pole;
+    JNumberTextField[][] plocha;
+
+    public Kontrola() {
+       
+    }
+    
+    
+    
+    public Kontrola(int radek, int sloupec, JNumberTextField[][] plocha) {
+        pole=new int[9][9];
+        this.radek = radek;
+        this.sloupec = sloupec;
+        
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (plocha[i][j].getText().isEmpty())
+                    this.pole[i][j]=0;
+                else
+                    this.pole[i][j] = Integer.decode(plocha[i][j].getText());
+            }
+        }
+        
+        
+    }
 
     public Kontrola(int radek, int sloupec, int[][] pole) {
         this.radek = radek;
         this.sloupec = sloupec;
         this.pole = pole;
+        
     }
     public boolean getVysledek() {
          if(KontrolujRadek()==false || KontrolujSloupec()==false || KontrolujCtverec()==false ){
@@ -27,7 +52,13 @@ public class Kontrola {
             }
                 return true; 
     }
-
+    
+    public void setKontrola(int radek, int sloupec, int[][] pole) {
+        this.radek = radek;
+        this.sloupec = sloupec;
+        this.pole = pole;
+    }
+    
     public int getRadek() {
         return radek;
     }
