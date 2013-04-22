@@ -17,15 +17,10 @@ public final class Generovanie {
     int obtiaznost;
     Kontrola kon;
 
-    public Generovanie() {
-    }
+    
      
-    public Generovanie(int obtiaznost) {
-        this.pole = new int[9][9];
-        this.obtiaznost = obtiaznost;
-        //this.pole[1][1]=1;
-        GenerujCelePole();
-        Generuj();
+    public Generovanie() {
+        this.pole = new int[9][9];        
     }
 
     public int[][] getPole() {
@@ -34,6 +29,25 @@ public final class Generovanie {
 
     public void setPole(int[][] pole) {
         this.pole = pole;
+    }
+    public void setCelePole(int[][] cPole) {
+        this.celePole=new int[9][9];
+        for (int r = 0; r < 9; r++) {
+            for (int s = 0; s < 9; s++) {
+               if(Math.abs(cPole[r][s])>10)
+               this.celePole[r][s]=cPole[r][s]+10;              //pole ktore sa nezobrazi
+               else this.celePole[r][s]=cPole[r][s];            //pole ktore sa zobrazi
+            }
+        }
+    }
+    public void setNacitanePole(int[][] nPole) {
+        this.pole=new int[9][9];
+        for (int r = 0; r < 9; r++) {
+            for (int s = 0; s < 9; s++) {
+               if(nPole[r][s]>-10)
+               this.pole[r][s]=nPole[r][s];                      //hracie pole je to ktore sa nacita       
+            }
+        }
     }
 
     public int getObtiaznost() {
@@ -47,12 +61,15 @@ public final class Generovanie {
     public int getHodnota(int i,int j) {
         return pole[i][j];
     }
+    public int[][] getCelePole() {
+        return celePole;
+    }
     public int getCelePole(int i, int j) {
         return Math.abs(celePole[i][j]);
     }
     
     
-    public void Generuj(){
+    public void generuj(){
         
         
         Random rd = new Random();
@@ -75,7 +92,7 @@ public final class Generovanie {
         
     }
     
-    public void GenerujCelePole(){
+    public void generujCelePole(){
         
     this.celePole=null;
     int x=0;
@@ -112,11 +129,8 @@ public final class Generovanie {
         this.celePole[r][s]=pole[r][s];
             }
         }
-        
     }
-    
-    
-    }
+}
     
     
 

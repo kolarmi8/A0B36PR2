@@ -22,6 +22,8 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
     JLabel display;
     Generovanie gen;
     Kontrola kon;
+    UlozHru uH;
+    NacitajHru nH;
     boolean zobrazPolia=false;
     boolean kontrolujPolia=false;
     boolean najdiCislo=false;
@@ -51,17 +53,17 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
         else
             plocha[i][j].setBackground(Color.RED);          // cislo nesplna pravidla sudoku
         }
-        System.out.println("insert");
+        //System.out.println("insert");
     }
 
     @Override
     public void removeUpdate(DocumentEvent de) {
-        System.out.println("remove");
+        //System.out.println("remove");
     }
 
     @Override
     public void changedUpdate(DocumentEvent de) {
-        System.out.println("changed");
+        //System.out.println("changed");
     }
 
     
@@ -88,25 +90,25 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
         }
         if(najdiCislo==true){
             try{
-            this.display.setText(""+gen.getCelePole(i, j));    // zobrazi cislo ktore patri do daneho stvorceka
+            this.display.setText("                                                                                   "+gen.getCelePole(i, j));    // zobrazi cislo ktore patri do daneho stvorceka
             }
             catch(NullPointerException e){
-            System.out.println("Pole nieje vygenerovane");
+            this.display.setText("                                                HRA nieje vytvorena!");
+            //System.out.println("Pole nieje vygenerovane");
             }
         }
                 
-        System.out.println("click");
+        //System.out.println("click");
     }
 
     @Override
     public void mousePressed(MouseEvent me) {
-        System.out.println("pressed");
+        //System.out.println("pressed");
     }
 
     @Override
-    public void mouseReleased(MouseEvent me) {
-        
-        System.out.println("released");
+    public void mouseReleased(MouseEvent me) {    
+        //System.out.println("released");
     }
 
     @Override
@@ -134,9 +136,8 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
                 plocha[s][r].setBackground(Color.GREEN);
             }
         }
-        } 
-        
-        System.out.println("enter");
+        }        
+        //System.out.println("enter");
     }
 
     @Override
@@ -165,7 +166,7 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
             }
         }
         }
-        System.out.println("exited");
+        //System.out.println("exited");
     }
 
     @Override
@@ -175,32 +176,84 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
         if(ae.getActionCommand().matches("Tazke")) this.obtiaznost = 20;
         
         if(ae.getActionCommand().matches("Lahke")||ae.getActionCommand().matches("Stredne")||ae.getActionCommand().matches("Tazke")){
-            gen= new Generovanie(obtiaznost);
+            gen= new Generovanie();
+            gen.setObtiaznost(obtiaznost);
+            gen.generujCelePole();          //vygeneruje cele pole sudoku
+            gen.generuj();                  //vygeneruje prazne miesta v sudoku
             for (int s = 0; s < 9; s++) {
                 for (int r = 0; r < 9; r++) {
                     plocha[r][s].setText("0");
                     plocha[r][s].setEditable(true);
                      if(gen.getHodnota(r,s)<0){
-                        plocha[r][s].setText(""+Math.abs(gen.getHodnota(r,s)));
+                        plocha[r][s].setText(""+Math.abs(gen.getHodnota(r,s)));    // vsetky zaporne cisla budu neprepisovatelne
                         plocha[r][s].setEditable(false);
                     }
                 }
-            }      
+            }   
+            this.display.setText("                                                                                     ");
         } 
         
         if(ae.getActionCommand().matches("Vyriesit")){
             try{
              for (int s = 0; s < 9; s++) {
-                for (int r = 0; r < 9; r++) {                  
+                for (int r = 0; r < 9; r++) {
                         plocha[r][s].setText(""+gen.getCelePole(r, s));      
                     }
                 }
             }
-            catch(NullPointerException e){
-            //display.setText("Pole nieje vygenerovane");
-            System.out.println("Pole nieje vygenerovane");
+            catch(NullPointerException e){    
+            this.display.setText("                                                HRA nieje vytvorena!");
+            //System.out.println("Pole nieje vygenerovane");
             }
         }       
+        if(ae.getActionCommand().matches("Ulozit")) { 
+            try{
+                uH=new UlozHru();
+                uH.setCelePole(gen.getCelePole());
+                uH.setPole(gen.getPole());
+                uH.setPole(plocha);
+                uH.uloz();                
+            }
+            catch(NullPointerException e){    
+            this.display.setText("                                                HRA nieje vytvorena!");
+            //System.out.println("Pole nieje vygenerovane");
+            }        
+        }
+        
+        if(ae.getActionCommand().matches("Nacitat")) { 
+            try{
+                nH=new NacitajHru();
+                //nH.setPole(gen.getCelePole());
+                nH.citaj();
+                
+                try{
+                    for (int s = 0; s < 9; s++) {
+                        for (int r = 0; r < 9; r++) {
+                                if(nH.getPole(r, s)<0&&nH.getPole(r, s)>-10) {
+                                this.plocha[r][s].setText(""+Math.abs(nH.getPole(r,s))); // nacita zaporne cisla a da ich do absolutnej hodnoty
+                                this.plocha[r][s].setEditable(false);                      // nastavi zaporne cisla zo zadania sudoku na needitovatelne
+                                }      
+                                else {
+                                this.plocha[r][s].setText(""+nH.getPole(r,s));
+                                this.plocha[r][s].setEditable(true);                    // nastavi cisla ktore uzivatel upravil na upravovatelne
+                                }
+                            }
+                        }
+                    }
+                catch(NullPointerException e){    
+                    this.display.setText("                                                HRA nieje vytvorena!");
+                    //System.out.println("nacitana hra sa nezobrazila");
+                }
+                gen=new Generovanie();
+                gen.setCelePole(nH.getPole());
+                gen.setNacitanePole(nH.getPole());
+            }
+            catch(NullPointerException e){    
+            this.display.setText("                                                HRA nieje vytvorena!");
+            //System.out.println("Pole nieje vygenerovane");
+            }        
+        }
+        
         if(ae.getActionCommand().matches("Koniec")) System.exit(0);    
         
     }

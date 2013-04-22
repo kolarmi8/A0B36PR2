@@ -35,7 +35,7 @@ public class Okno extends JFrame{
     public Okno() throws HeadlessException {
         
         super();
-        this.setBounds(100,100,500,500);
+        this.setBounds(100,100,400,400);
         this.setTitle("Sudoku");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBackground(Color.yellow);
@@ -83,9 +83,9 @@ public class Okno extends JFrame{
     }
     
     display = new JLabel();
-    display.setHorizontalAlignment(JLabel.CENTER); 
-    display.setText("0");
-    //this.add(display,new GridBagConstraints(8, 0, 1, 1, 1d, 0.1d, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0,10,0,0), 0, 0));
+    display.setHorizontalAlignment(JLabel.CENTER);
+    display.setText("                                                                                     ");
+    display.setBounds(1, 30, 1, 2);
     oS.setDisplay(display);
     
 
@@ -120,23 +120,15 @@ public class Okno extends JFrame{
             JCheckBoxMenuItem cbMenuKontrola = new JCheckBoxMenuItem("Kontrolovat polia");
             cbMenuKontrola.addItemListener(oS);
             JCheckBoxMenuItem cbMenuCislo = new JCheckBoxMenuItem("Najst cislo");
-            cbMenuCislo.addItemListener(oS);
-            
+            cbMenuCislo.addItemListener(oS);           
         menuNastavenia.add(cbMenuPolia);
         menuNastavenia.add(cbMenuKontrola);
         menuNastavenia.add(cbMenuCislo);   
         menu.add(menuNastavenia);
-            System.out.println(""+menu.getUIClassID());
-            System.out.println(""+display.getUI());
-            
             JMenuItem riesenie = new JMenuItem("Vyriesit");
-            
-            System.out.println(""+riesenie.getUI());
-         //    riesenie.setUI(new MetalMenuItemUI(););
             riesenie.addActionListener(oS);
-        menu.add(riesenie);
+            menuNastavenia.add(riesenie);
         menu.add(display);
-        
             
         this.add(menu,new GridBagConstraints(0, 0, 9, 1, 1d, 0.1d, GridBagConstraints.WEST, GridBagConstraints.REMAINDER, new Insets(2,1,0,1), 1, 1));
         
