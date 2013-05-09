@@ -23,38 +23,26 @@ public class UlozHru {
     public void setCelePole(int[][] celePole) {
         this.celePole = celePole;
     }
-    
-    public void setPole(JNumberTextField plocha[][]) {
-        for (int r = 0; r < 9; r++) {
-                 for (int s = 0; s < 9; s++) {
-                     if(!plocha[r][s].getText().isEmpty()){
-                         if(pole[r][s]<0)
-                        this.pole[r][s]=-Integer.decode(plocha[r][s].getText());         // prevod retazca na int
-                         else   this.pole[r][s]=Integer.decode(plocha[r][s].getText());
-                     }
-                     else {
-                        pole[r][s]=celePole[r][s]-10;
-                     }
-                 }
-            }
-    }
-    
-    
+       
     public void uloz(){
     
-        if(pole!=null)
-    try {
-            FileOutputStream fos = new FileOutputStream("sudoku.bin");
-            
-            for (int r = 0; r < 9; r++) {
-                 for (int s = 0; s < 9; s++) {
-                     fos.write(pole[r][s]);    // zapisuje postupne kazde pole          
-                 }
-            }
-            //System.out.println("Ulozene");
-        fos.close();
-        } catch (IOException e) {
-            //System.out.println("Chyba");
+        if(pole!=null) {
+            try {
+                    FileOutputStream fos = new FileOutputStream("sudoku.bin");
+                    
+                    for (int r = 0; r < 9; r++) {
+                         for (int s = 0; s < 9; s++) {
+                             celePole[r][s]=(celePole[r][s]-10);//-10
+                                if(pole[r][s]!=0) {
+                                 celePole[r][s]=pole[r][s];
+                             }
+                             fos.write(celePole[r][s]);    // zapisuje postupne kazde pole          
+                         }
+                    }
+                fos.close();
+                } catch (IOException e) {
+                    //System.out.println("Chyba");
+                }
         }
     }
      

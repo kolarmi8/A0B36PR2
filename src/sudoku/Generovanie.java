@@ -16,9 +16,7 @@ public final class Generovanie {
     int[][] celePole;
     int obtiaznost;
     Kontrola kon;
-
-    
-     
+ 
     public Generovanie() {
         this.pole = new int[9][9];        
     }
@@ -34,18 +32,13 @@ public final class Generovanie {
         this.celePole=new int[9][9];
         for (int r = 0; r < 9; r++) {
             for (int s = 0; s < 9; s++) {
-               if(Math.abs(cPole[r][s])>10)
-               this.celePole[r][s]=cPole[r][s]+10;              //pole ktore sa nezobrazi
-               else this.celePole[r][s]=cPole[r][s];            //pole ktore sa zobrazi
-            }
-        }
-    }
-    public void setNacitanePole(int[][] nPole) {
-        this.pole=new int[9][9];
-        for (int r = 0; r < 9; r++) {
-            for (int s = 0; s < 9; s++) {
-               if(nPole[r][s]>-10)
-               this.pole[r][s]=nPole[r][s];                      //hracie pole je to ktore sa nacita       
+               if(cPole[r][s]<-10) {
+                    this.celePole[r][s]=cPole[r][s]+10;
+                }              //pole ktore sa nezobrazi
+               else {
+                    this.celePole[r][s]=cPole[r][s];
+                }            //pole ktore sa zobrazi
+                
             }
         }
     }
@@ -57,7 +50,9 @@ public final class Generovanie {
     public void setObtiaznost(int obtiaznost) {
         this.obtiaznost = obtiaznost;
     }
-    
+    public void setHodnota(int i,int j,int hodnota) {
+        this.pole[i][j]=hodnota;                        /*****************/
+    }
     public int getHodnota(int i,int j) {
         return pole[i][j];
     }
@@ -133,4 +128,3 @@ public final class Generovanie {
 }
     
     
-
