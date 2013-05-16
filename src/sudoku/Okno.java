@@ -44,8 +44,12 @@ public class Okno extends JFrame{
         plocha = new JNumberTextField[9][9];
         
         ObsluhaSudoku oS = new ObsluhaSudoku(plocha);
-        //Generovanie gen= new Generovanie(obtiaznost);
-       
+     
+/*
+ * Vytvorenie hracieho pola pomocou dvoch cyklov
+ * podmienky sluzia na nastavenie okraja pola, a okraja stvorcov 3x3
+ * ako rozhranie je pouzity GridBagLayout pre jednoduche rozlozenie jednotlivych poli pomocou cyklu
+ */   
         
     for(int i= 0; i < 9; i++) {
         for(int j = 0; j < 9; j++) {
@@ -65,30 +69,24 @@ public class Okno extends JFrame{
             plocha[i][j].setForeground(Color.BLACK);
             plocha[i][j].setBackground(Color.WHITE);
             plocha[i][j].setHorizontalAlignment(JTextField.CENTER);
-
             this.add(plocha[i][j],new GridBagConstraints(i, (j+1), 1, 1, 1d, 1d, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0)) ;   
-            
-            //vygenerovane cisla su zaporne
-            /*
-            if(gen.getHodnota(i,j)<0){
-            plocha[i][j].setText(""+Math.abs(gen.getHodnota(i,j)));
-            plocha[i][j].setEditable(false);
-            }
-            */
-            plocha[i][j].addMouseListener(oS);
-            
+            plocha[i][j].addMouseListener(oS);          
             plocha[i][j].getDocument().addDocumentListener(oS);
             plocha[i][j].setPoloha(i, j);
         }
     }
-    
+ /*
+ * Vytvorenie displeja do menu
+ */ 
     display = new JLabel();
     display.setHorizontalAlignment(JLabel.CENTER);
     display.setText("                                                                                     ");
     display.setBounds(1, 30, 1, 2);
     oS.setDisplay(display);
     
-
+/*
+ * Vytvorenie MENU pre okno
+ */
         JMenuBar menu = new JMenuBar();
         menu.setSize(20, 10);
         JMenu menuOkno = new JMenu("Okno");
@@ -130,10 +128,7 @@ public class Okno extends JFrame{
             menuNastavenia.add(riesenie);
         menu.add(display);
             
-        this.add(menu,new GridBagConstraints(0, 0, 9, 1, 1d, 0.1d, GridBagConstraints.WEST, GridBagConstraints.REMAINDER, new Insets(2,1,0,1), 1, 1));
-        
-        
-        
+        this.add(menu,new GridBagConstraints(0, 0, 9, 1, 1d, 0.1d, GridBagConstraints.WEST, GridBagConstraints.REMAINDER, new Insets(2,1,0,1), 1, 1));       
     
     }
 }

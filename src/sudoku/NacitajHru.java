@@ -10,6 +10,11 @@ import java.io.IOException;
 /**
  *
  * @author Michal
+ * 
+ * Objekt tejto triedy cita zo suboru cisla 
+ * Ak bolo cislo zaporne(neprepisovatelne) tak sa musi odcitat od 256 
+ * pretoze zaporne cisla typu int su takto ulozene, potom sa k nim da znamienko - aby boli zase neprepisovatelne
+ * 
  */
 public class NacitajHru {
     Generovanie gen = new Generovanie();
@@ -30,15 +35,14 @@ public class NacitajHru {
                  for (int s = 0; s < 9; s++) {
                     if((gen.pole[r][s]=fis.read())>10) {
                          gen.pole[r][s] = -(256-gen.pole[r][s]);
-                     } // pre zaporne cisla
+                     } 
                     else {
                          gen.pole[r][s] = gen.pole[r][s];
                      } 
                  }
             }          
         fis.close();
-        } catch (IOException e) {
-            //System.out.println("Soubor sa nenasiel.");
+        } catch (IOException e) {          
             
         }
     }

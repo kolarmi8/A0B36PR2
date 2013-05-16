@@ -3,16 +3,11 @@
  * and open the template in the editor.
  */
 package sudoku;
-
-import sudoku.Okno;
-
-
-
-
-
 /**
  *
  * @author Michal
+ * 
+ * Metoda main len vytvory objkt okno a nastavi ho viditelnym
  */
 public class Sudoku {
 

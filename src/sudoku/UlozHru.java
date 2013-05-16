@@ -23,7 +23,11 @@ public class UlozHru {
     public void setCelePole(int[][] celePole) {
         this.celePole = celePole;
     }
-       
+    /*
+     * Metoda uklada jednotlive polia, tie ktore su prepisovatelne ostanu prepisovatelne, 
+     * neprepisovatelne dostanu zapornu hodnotu
+     * Polia ktore boli vygenerovane ale neskor sa stali dierami, su zapisane zaporne -10
+     */
     public void uloz(){
     
         if(pole!=null) {
@@ -32,16 +36,16 @@ public class UlozHru {
                     
                     for (int r = 0; r < 9; r++) {
                          for (int s = 0; s < 9; s++) {
-                             celePole[r][s]=(celePole[r][s]-10);//-10
+                             celePole[r][s]=(celePole[r][s]-10);
                                 if(pole[r][s]!=0) {
                                  celePole[r][s]=pole[r][s];
                              }
-                             fos.write(celePole[r][s]);    // zapisuje postupne kazde pole          
+                             fos.write(celePole[r][s]);            
                          }
                     }
                 fos.close();
                 } catch (IOException e) {
-                    //System.out.println("Chyba");
+                    
                 }
         }
     }

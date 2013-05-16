@@ -17,38 +17,21 @@ public class Kontrola {
     int[][] pole;
     JNumberTextField[][] plocha;
 
-    public Kontrola() {
-       
+    public Kontrola() {       
     }
     
-    
-    
-    public Kontrola(int radek, int sloupec, JNumberTextField[][] plocha) {
-        pole=new int[9][9];
-        this.radek = radek;
-        this.sloupec = sloupec;
-        
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (plocha[i][j].getText().isEmpty())
-                    this.pole[i][j]=0;
-                else
-                    this.pole[i][j] = Integer.decode(plocha[i][j].getText());
-            }
-        }
-        
-        
-    }
-
     public Kontrola(int radek, int sloupec, int[][] pole) {
         this.radek = radek;
         this.sloupec = sloupec;
         this.pole = pole;
         
     }
+    /*
+     * getVysledek vracia true ak platia vsetky pravidla sudoku (stlpce, riadky, stvorce)
+     */
     public boolean getVysledek() {
          if(KontrolujRadek()==false || KontrolujSloupec()==false || KontrolujCtverec()==false ){
-                return false;  // ked aspon jedna metoda je false
+                return false;  
             }
                 return true; 
     }
@@ -83,7 +66,9 @@ public class Kontrola {
         this.pole = pole;
     }
     
-     
+    /*
+     * Tato metoda prechadza vsetky polia riadku, ak najde 2 rovnake hodnoty vrati false
+     */ 
     boolean KontrolujRadek() {
         Map<Integer, Integer> mapa = new HashMap<Integer, Integer>();
         int ret = 1;
@@ -92,7 +77,7 @@ public class Kontrola {
                 continue;
             }
             if (!mapa.containsKey(Math.abs(pole[radek][i]))) {
-                mapa.put(Math.abs(pole[radek][i]), 1);       // ak mapa neobsahuje cislo tak ho zapise
+                mapa.put(Math.abs(pole[radek][i]), 1);       
             } else {
                 ret = 0;
                 break;
@@ -107,6 +92,9 @@ public class Kontrola {
         }
     }
 
+    /*
+     * Tato metoda prechadza vsetky polia stlpci, ak najde 2 rovnake hodnoty vrati false
+     */ 
     boolean KontrolujSloupec() {
         Map<Integer, Integer> mapa = new HashMap<Integer, Integer>();
         int ret = 1;
@@ -130,7 +118,10 @@ public class Kontrola {
             return true;
         }
     }
-
+    /*
+     * Tato metoda prechadza vsetky polia v stvorci 3x3, ak najde 2 rovnake hodnoty vrati false
+     * Podmienky len upresnuju polohu stvorca
+     */ 
     boolean KontrolujCtverec() {
         Map<Integer, Integer> mapa = new HashMap<Integer, Integer>();
         int a, b;

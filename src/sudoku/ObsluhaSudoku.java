@@ -14,6 +14,8 @@ import javax.swing.event.DocumentEvent;
 /**
  *
  * @author Michal
+ * Tato trieda tvori obsluhu sudoku
+ * Implementuje triedy pre akcie mysi, udalosti a menu
  */
 public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.awt.event.MouseListener, java.awt.event.ActionListener, java.awt.event.ItemListener {
 
@@ -38,12 +40,16 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
     public void setDisplay(JLabel display) {
         this.display = display;
     }
-
+    /*
+     * Metoda nacita cislo ktore uzivatel napisal a jeho polohu a zapise ju do pola sudoku
+     * Ak je v menu zaskrtnute kontola poli, tak po vlozeni cisla sa cislo skontroluje podla pravidiel sudoku
+     * a ak splna pravidla vyfarbi sa BLUE ak nesplna RED 
+     */
     @Override
     public void insertUpdate(DocumentEvent de) {
 
         try {
-            gen.setHodnota(i, j, Integer.parseInt(plocha[i][j].getText()));      // hodnota je v poli
+            gen.setHodnota(i, j, Integer.parseInt(plocha[i][j].getText()));      
         } catch (NumberFormatException e) {
             
         }
@@ -51,13 +57,15 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
             kon = new Kontrola(i, j, gen.getPole());
             if (kon.getVysledek() == true) {
                 plocha[i][j].setBackground(Color.BLUE);
-            } // cislo splna pravidla sudoku
+            } 
             else {
                 plocha[i][j].setBackground(Color.RED);
-            }          // cislo nesplna pravidla sudoku
+            }          
         }
     }
-
+    /*
+     * Metoda vynuluje cislo v poli sudoku, ak bolo cislo v hracej ploche vymazane
+     */
     @Override
     public void removeUpdate(DocumentEvent de) {
         gen.setHodnota(i, j, 0);
@@ -66,7 +74,12 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
     @Override
     public void changedUpdate(DocumentEvent de) {
     }
-
+    /*
+     * Metoda funguje po kliknuti na plochu
+     * Ak je v menu zaskrtnute kontrola poli, po kliknuti na plochu sa pole zafarbi CYAN ak je prepisovatelne
+     * a MAGENTA ak sa neda prepisat
+     * Ak je v menu zaskrnute najdi cislo, tak v pravo na display sa zobrazi cislo ktore patri do daneho pola
+     */
     @Override
     public void mouseClicked(MouseEvent me) {
         if (kontrolujPolia == true) {
@@ -107,7 +120,10 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
     @Override
     public void mouseReleased(MouseEvent me) {
     }
-
+    /*
+     * Metoda funguje ak je v menu zaskrnute zobrazovanie aktivnych poli
+     * Poloha na ktorej je kurzor mysi urci riadok, stlpec, a stvorec 3x3 a tie sa vyfarbia GREEN
+     */
     @Override
     public void mouseEntered(MouseEvent me) {
         if (zobrazPolia == true) {
@@ -143,7 +159,10 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
             }
         }
     }
-
+    /*
+     * Metoda funguje ak je v menu zaskrnute zobrazovanie aktivnych poli
+     * Poloha na ktorej bol kurzor mysi urci riadok, stlpec, a stvorec 3x3 ktore sa vratia na farbu WHITE
+     */
     @Override
     public void mouseExited(MouseEvent me) {
 
@@ -179,7 +198,18 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
             }
         }
     }
-
+    /*
+     * Metoda funguje pre tlacitka v menu
+     * Tlacitka Lahke, Stredne, Tazke priradzuju cisla ktore urcuju obtiaznost vygenerovanej hry
+     * Hra sa vygeneruje a diery sa nezobrazia, cisla so zapornym znamienktom sa zobrazia v absolutnej hodnote, 
+     * ale nastavia sa na neprepisovatelne (to vytvori zadanie sudoku)
+     * 
+     * Tlacitko vyriesit len zobrazi na ploche cisla z premennej celePole 
+     * 
+     * Tkacitko Ulozit, hru ulozi pomocou objektu triedy UlozHru
+     * 
+     * Tlacitko Nacitat, hru nacita, zaporne cisla nastavi na neprepisovatelne, kladne na prepisovatelne (vlozene uzivatelom)
+     */
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getActionCommand().matches("Lahke")) {
@@ -195,14 +225,14 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
         if (ae.getActionCommand().matches("Lahke") || ae.getActionCommand().matches("Stredne") || ae.getActionCommand().matches("Tazke")) {
             gen = new Generovanie();
             gen.setObtiaznost(obtiaznost);
-            gen.generujCelePole();          //vygeneruje cele pole sudoku
-            gen.generuj();                  //vygeneruje prazne miesta v sudoku
+            gen.generujCelePole();          
+            gen.generuj();                  
             for (int s = 0; s < 9; s++) {
                 for (int r = 0; r < 9; r++) {
                     plocha[r][s].setText("0");
                     plocha[r][s].setEditable(true);
                     if (gen.getHodnota(r, s) < 0) {
-                        plocha[r][s].setText("" + Math.abs(gen.getHodnota(r, s)));    // vsetky zaporne cisla budu neprepisovatelne
+                        plocha[r][s].setText("" + Math.abs(gen.getHodnota(r, s)));    
                         plocha[r][s].setEditable(false);
                     }
                 }
@@ -241,11 +271,11 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
                     for (int s = 0; s < 9; s++) {
                         for (int r = 0; r < 9; r++) {
                             if (nH.getPole(r, s) < 0 && nH.getPole(r, s) > -10) {
-                                this.plocha[r][s].setText("" + Math.abs(nH.getPole(r, s))); // nacita zaporne cisla a da ich do absolutnej hodnoty
-                                this.plocha[r][s].setEditable(false);                      // nastavi zaporne cisla zo zadania sudoku na needitovatelne
+                                this.plocha[r][s].setText("" + Math.abs(nH.getPole(r, s))); 
+                                this.plocha[r][s].setEditable(false);                      
                             } else {
                                 this.plocha[r][s].setText("" + nH.getPole(r, s));
-                                this.plocha[r][s].setEditable(true);                    // nastavi cisla ktore uzivatel upravil na upravovatelne
+                                this.plocha[r][s].setEditable(true);                   
                             }
                         }
                     }
@@ -263,7 +293,11 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
         }
 
     }
-
+    /*
+     * Metoda funguje ak sa v menu zaskrtne niektora funkia
+     * Kazda z tychto funkcii ma svoju premennu typu boolean a ak sa zaskrnte alebo odskrne
+     * nastavi premennu na TRUE alebo FALSE
+     */
     @Override
     public void itemStateChanged(ItemEvent ie) {
 

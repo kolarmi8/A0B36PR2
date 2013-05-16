@@ -5,7 +5,7 @@
 package sudoku;
 
 /**
- *
+ * 
  * @author Michal
  */
 import javax.swing.JTextField;
@@ -13,7 +13,9 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
-
+/*
+ * Trieda je rozsirenim triedy JTextField, umoznuje zapis iba jednocifernych cisel od 1-9
+ */
 
 public class JNumberTextField extends JTextField {
     int i;
