@@ -93,15 +93,15 @@ public class ObsluhaSudoku implements javax.swing.event.DocumentListener, java.a
 
         if (plocha[i][j].isEditable() == true) {
             plocha[i][j].selectAll();
-        }               //oznaci cisla ktore je mozne prepisovat
+        }               
 
         if (kontrolujPolia == true) {
             if (plocha[i][j].isEditable() == true) {
                 plocha[i][j].selectAll();
-                plocha[i][j].setBackground(Color.CYAN);  // prepisovatelne pole
+                plocha[i][j].setBackground(Color.CYAN);  
             } else {
                 plocha[i][j].setBackground(Color.MAGENTA);
-            }  // pole sa neda prepisat
+            }  
 
         }
         if (najdiCislo == true) {
